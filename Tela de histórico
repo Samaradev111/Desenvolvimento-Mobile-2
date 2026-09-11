@@ -1,0 +1,149 @@
+import React from 'react';
+
+import { StyleSheet, Text, View, FlatList } from 'react-native';
+
+const historyData = [
+
+  { id: '1', title: 'Puxada frontal', group: 'Costas', hour: '08:56' },
+
+  { id: '2', title: 'Remada curvada', group: 'Costas', hour: '09:15' },
+
+  { id: '3', title: 'Supino reto', group: 'Peito', hour: '10:00' },
+
+];
+
+export default function App() {
+
+  return (
+
+    <View style={styles.container}>
+
+      <View style={styles.header}>
+
+        <Text style={styles.headerTitle}>Histórico de Exercícios</Text>
+
+      </View>
+
+      <FlatList
+
+        data={historyData}
+
+        keyExtractor={(item) => item.id}
+
+        contentContainerStyle={styles.listContent}
+
+        renderItem={({ item }) => (
+
+          <View style={styles.card}>
+
+            <View>
+
+              <Text style={styles.cardGroup}>{item.group}</Text>
+
+              <Text style={styles.cardTitle}>{item.title}</Text>
+
+            </View>
+
+            <Text style={styles.cardHour}>{item.hour}</Text>
+
+          </View>
+
+        )}
+
+      />
+
+    </View>
+
+  );
+
+}
+
+const styles = StyleSheet.create({
+
+  container: {
+
+    flex: 1,
+
+    backgroundColor: '#121214',
+
+  },
+
+  header: {
+
+    backgroundColor: '#202024',
+
+    paddingTop: 60,
+
+    paddingBottom: 24,
+
+    alignItems: 'center',
+
+  },
+
+  headerTitle: {
+
+    color: '#E1E1E6',
+
+    fontSize: 18,
+
+    fontWeight: 'bold',
+
+  },
+
+  listContent: {
+
+    padding: 24,
+
+  },
+
+  card: {
+
+    backgroundColor: '#202024',
+
+    padding: 16,
+
+    borderRadius: 6,
+
+    flexDirection: 'row',
+
+    justifyContent: 'space-between',
+
+    alignItems: 'center',
+
+    marginBottom: 12,
+
+  },
+
+  cardGroup: {
+
+    color: '#00B37E',
+
+    fontSize: 12,
+
+    textTransform: 'uppercase',
+
+    fontWeight: 'bold',
+
+  },
+
+  cardTitle: {
+
+    color: '#FFFFFF',
+
+    fontSize: 16,
+
+    marginTop: 2,
+
+  },
+
+  cardHour: {
+
+    color: '#7C7C8A',
+
+    fontSize: 14,
+
+  },
+
+});
+
+faça um prototipo de uma Tela de Histórico funcionando
