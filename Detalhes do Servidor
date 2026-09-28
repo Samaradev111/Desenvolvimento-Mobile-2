@@ -1,0 +1,56 @@
+import React from 'react';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+
+const MEMBERS = [
+  { id: '1', name: 'Rodrigo', status: 'Disponível' },
+  { id: '2', name: 'Diego', status: 'Ocupado' }
+];
+
+export function AppointmentDetails() {
+  return (
+    <View style={styles.container}>
+      {/* Banner da Partida */}
+      <View style={styles.banner}>
+        <Text style={styles.title}>Lendários</Text>
+        <Text style={styles.subtitle}>É hoje que vamos ao top 1 do servidor</Text>
+      </View>
+
+      {/* Lista de Membros */}
+      <View style={styles.membersHeader}>
+        <Text style={styles.membersTitle}>Jogadores</Text>
+        <Text style={styles.membersCount}>Total {MEMBERS.length}</Text>
+      </View>
+
+      <FlatList
+        data={MEMBERS}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <View style={styles.memberCard}>
+            <Text style={styles.memberName}>{item.name}</Text>
+            <Text style={{ color: item.status === 'Disponível' ? '#32B768' : '#E51C44' }}>
+              {item.status}
+            </Text>
+          </View>
+        )}
+      />
+
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.buttonText}>Entrar na partida</Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#0E1017', paddingHorizontal: 24, paddingTop: 60 },
+  banner: { height: 160, backgroundColor: '#1B1E29', borderRadius: 8, justifyContent: 'flex-end', padding: 16, marginBottom: 24 },
+  title: { color: '#DDE3F0', fontSize: 28, fontWeight: 'bold' },
+  subtitle: { color: '#ABB1CC', fontSize: 13 },
+  membersHeader: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12 },
+  membersTitle: { color: '#DDE3F0', fontSize: 18, fontWeight: 'bold' },
+  membersCount: { color: '#ABB1CC' },
+  memberCard: { flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: '#1B1E29' },
+  memberName: { color: '#DDE3F0', fontSize: 16 },
+  button: { height: 56, backgroundColor: '#E51C44', borderRadius: 8, justifyContent: 'center', alignItems: 'center', marginBottom: 24 },
+  buttonText: { color: '#FFF', fontWeight: 'bold' }
+});
