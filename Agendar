@@ -1,0 +1,78 @@
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
+
+const CATEGORIES = [
+  { id: '1', title: 'Ranqueada' },
+  { id: '2', title: 'Diversão' },
+  { id: '3', title: '1x1' },
+];
+
+export function AppointmentCreate() {
+  // Estado para controlar a seleção de categoria
+  const [selectedCategory, setSelectedCategory] = useState('');
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.headerTitle}>Agendar partida</Text>
+
+      {/* Seleção de Categoria com Mudança de Estado */}
+      <Text style={styles.label}>Categoria</Text>
+      <View style={styles.categories}>
+        {CATEGORIES.map((item) => (
+          <TouchableOpacity
+            key={item.id}
+            style={[
+              styles.categoryCard, 
+              selectedCategory === item.id && styles.categorySelected
+            ]}
+            onPress={() => setSelectedCategory(item.id)}
+          >
+            <Text style={styles.categoryText}>{item.title}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
+      {/* Servidor Fixo/Selecionado */}
+      <Text style={styles.label}>Servidor selecionado</Text>
+      <View style={styles.serverCard}>
+        <View style={styles.serverIcon} />
+        <Text style={styles.serverName}>Lendários</Text>
+      </View>
+
+      {/* Form de Data e Hora */}
+      <View style={styles.fieldGroup}>
+        <View style={styles.field}>
+          <Text style={styles.label}>Dia e mês</Text>
+          <TextInput style={styles.input} placeholder="dd/mm" placeholderTextColor="#ABB1CC" />
+        </View>
+
+        <View style={styles.field}>
+          <Text style={styles.label}>Horário</Text>
+          <TextInput style={styles.input} placeholder="hh:mm" placeholderTextColor="#ABB1CC" />
+        </View>
+      </View>
+
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.buttonText}>Agendar</Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#0E1017', paddingHorizontal: 24, paddingTop: 60 },
+  headerTitle: { color: '#DDE3F0', fontSize: 20, fontWeight: 'bold', textAlign: 'center', marginBottom: 24 },
+  label: { color: '#DDE3F0', fontSize: 18, fontWeight: 'bold', marginBottom: 12 },
+  categories: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 24 },
+  categoryCard: { width: 100, height: 100, backgroundColor: '#1B1E29', borderRadius: 8, justifyContent: 'center', alignItems: 'center', opacity: 0.4 },
+  categorySelected: { opacity: 1, borderWidth: 1, borderColor: '#E51C44' },
+  categoryText: { color: '#DDE3F0', fontWeight: 'bold' },
+  serverCard: { height: 68, backgroundColor: '#1B1E29', borderRadius: 8, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, marginBottom: 24 },
+  serverIcon: { width: 40, height: 40, backgroundColor: '#E51C44', borderRadius: 8, marginRight: 16 },
+  serverName: { color: '#DDE3F0', fontSize: 18, fontWeight: 'bold' },
+  fieldGroup: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 24 },
+  field: { width: '48%' },
+  input: { height: 48, backgroundColor: '#1B1E29', borderRadius: 8, color: '#DDE3F0', paddingHorizontal: 16 },
+  button: { height: 56, backgroundColor: '#E51C44', borderRadius: 8, justifyContent: 'center', alignItems: 'center', marginTop: 'auto', marginBottom: 24 },
+  buttonText: { color: '#FFF', fontWeight: 'bold' }
+});
