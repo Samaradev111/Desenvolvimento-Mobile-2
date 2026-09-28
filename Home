@@ -1,0 +1,72 @@
+import React, { useState } from 'react';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+
+const CATEGORIES = [
+  { id: '1', title: 'Ranqueada' },
+  { id: '2', title: 'Diversão' },
+  { id: '3', title: '1x1' },
+];
+
+const APPOINTMENTS = [
+  { id: '1', guild: 'Lendários', category: '1', date: '22/06 às 20:00h', match: 'Raid' },
+  { id: '2', guild: 'Valorant'  , category: '2', date: '23/06 às 18:00h', match: 'Casual' }
+];
+
+export function Home({ navigation }) {
+  const [category, setCategory] = useState('');
+
+  return (
+    <View style={styles.container}>
+      {/* Header com Perfil */}
+      <View style={styles.header}>
+        <Text style={styles.greeting}>Olá, <Text style={styles.username}>Usuário</Text></Text>
+        <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('Schedule')}>
+          <Text style={styles.addText}>+</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Categorias */}
+      <View style={styles.categories}>
+        {CATEGORIES.map((item) => (
+          <TouchableOpacity
+            key={item.id}
+            style={[styles.categoryCard, category === item.id && styles.categorySelected]}
+            onPress={() => setCategory(category === item.id ? '' : item.id)}
+          >
+            <Text style={styles.categoryTitle}>{item.title}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
+      {/* Lista de Agendamentos */}
+      <FlatList
+        data={APPOINTMENTS}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('Details', { item })}>
+            <View>
+              <Text style={styles.cardTitle}>{item.guild}</Text>
+              <Text style={styles.cardSubtitle}>{item.match} • {item.date}</Text>
+            </View>
+          </TouchableOpacity>
+        )}
+      />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#0E1017', paddingHorizontal: 24, paddingTop: 60 },
+  header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 },
+  greeting: { color: '#DDE3F0', fontSize: 24 },
+  username: { fontWeight: 'bold' },
+  addButton: { width: 48, height: 48, backgroundColor: '#E51C44', borderRadius: 8, justifyContent: 'center', alignItems: 'center' },
+  addText: { color: '#FFF', fontSize: 24 },
+  categories: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 24 },
+  categoryCard: { width: 100, height: 100, backgroundColor: '#1B1E29', borderRadius: 8, justifyContent: 'center', alignItems: 'center', opacity: 0.5 },
+  categorySelected: { opacity: 1, borderWidth: 1, borderColor: '#E51C44' },
+  categoryTitle: { color: '#DDE3F0', fontWeight: 'bold' },
+  card: { backgroundColor: '#1B1E29', padding: 16, borderRadius: 8, marginBottom: 12 },
+  cardTitle: { color: '#DDE3F0', fontSize: 18, fontWeight: 'bold' },
+  cardSubtitle: { color: '#ABB1CC', marginTop: 4 }
+});
